@@ -42,7 +42,7 @@ l_americanus <- read.structure('data/Cheng_Lepus_americanus.str',  # file
 
 
 # Look at population structure -----
-# Sample sites are not necessarily separate "populations." The goal of many studies is often to describe *population structure* by clustering
+# Sample sites are not necessarily separate "populations." The goal of studies is often to describe *population structure* by clustering
 # locations with similar genetic makeup (similar allele frequencies) indicating that they likely make up a single population.
 
 # We can get a rough idea about population structure by doing a quick principal components analysis (PCA) on the allele frequency data:
