@@ -138,7 +138,7 @@ s.class(pcaX$li, pop(snow)) # plot PCA results
 # arbitrary and depend on what the research question is.
 # Looking at higher or lower levels of clustering can help understand the data.
 # Try plotting with different numbers of clusters (k):
-plot_clusters(data = snow, sf_data = coords_spatial, k = 3)
+plot_clusters(data = snow, sf_data = coords_spatial, clusters = 3)
 
 # 3. Estimating diversity metrics (alpha diversity) --------
 # We can estimate the genetic diversity at each site in several ways. Here we'll use two: allelic richness and gene diversity.
@@ -176,7 +176,6 @@ plot(ar_hares ~ num_individuals)
 cor.test(ar_hares, num_individuals)
 
 ### Q5: what happens if you change the minimum sample size? -----
-hist(summary(snow)$pop.n.all)
 hist(colMeans(allelic.richness(snow, min.n = 2)$Ar))
 hist(colMeans(allelic.richness(snow, min.n = 30)$Ar))
 
@@ -188,7 +187,7 @@ hist(colMeans(allelic.richness(snow, min.n = 30)$Ar))
 (gd_hares <- Hs(snow))
 hist(gd_hares)
 
-# How is gene diversity related to population size?
+# How is gene diversity related to sample size?
 plot(gd_hares~num_individuals)
 
 cor.test(gd_hares, num_individuals)
@@ -203,10 +202,11 @@ cor.test(gd_hares, ar_hares)
 # 4. Estimating differentiation metrics (beta diversity) ----
 # In population genetics we typically use FST to estimate genetic differentiation. This is based on Wright's F-statistics,
 # and it's a way to partition variance in allele frequencies within populations vs between populations.
-# There are many, many flavors of FST. (Technically, the one we use for microsatellite data is called GST).
+# There are many flavors of FST. (Technically, the one we use for microsatellite data is called GST).
 
 # A common FST is pairwise FST developed by Weir & Cockerham (1984). 
 # With this we compare all pairs of populations.
+snow_hst <- genind2hierfstat(snow)
 
 (pw_fst <- hierfstat::pairwise.WCfst(snow)) # this is a bit slow for bigger datasets
 
@@ -226,16 +226,19 @@ plot(cmd.fst12$PCoA2, cmd.fst12$PCoA1)
 ## Hint: population differentiation is a measure of population structure
 
 # Pairwise FST is useful, but sometimes for our analyses it's simpler to have a single value per population.
-# And, especially when working with data from multiple species, comparing pairwise FST can be misleading due to the underlying math
+# And, especially when working with data from multiple species, comparing pairwise FST can be misleading due to way it's calculated
 # We can overcome these issues using another metric of differentiation: population-specific FST.
 # The interpretation of this metric is slightly different: it is an estimate of how far a population has diverged from the common
 # ancestor of all the populations sampled.
 
 ps.fst <- betas(snow)
-summary(ps.fst)
+names(ps.fst)
 
 # Population-specific FSTs are stored in 'betaiovl'
 ps.fst <- ps.fst$betaiovl
+summary(ps.fst)
+hist(ps.fst)
+
 
 # Let's plot these on the map!
 coords_spatial$ps.fst <- ps.fst[order(names(ps.fst))] # populations are in alphabetical order in the coordinate data

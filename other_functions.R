@@ -29,3 +29,30 @@ plot_clusters <- function(data, sf_data, basemap = ca_usa, clusters){
 
 
 
+# Summarise effects from models
+plot_format <- function(model, predictor, response){
+  # Extract fixed effects
+  fixed <- fixef(model)[predictor]
+  
+  # 95% confidence interval for fixed effect:
+  cofint95 <- confint(model)[predictor,]
+  lo_95 <- cofint95[1]
+  up_95 <- cofint95[2]
+  
+  # Extract random slopes
+  slopes <- coef(model)[[1]]
+  slope_df <- data.frame(species = rownames(slopes),
+                         slope = slopes[,predictor])
+  
+  # Output table
+  plot_sum <- data.frame(species = slope_df$species,
+                         variable = predictor,
+                         main_effect = fixed,
+                         lower_95 = lo_95,
+                         upper_95 = up_95,
+                         species_effect = slope_df$slope,
+                         response_var = response,
+                         row.names = NULL)
+  
+  return(plot_sum)
+}
