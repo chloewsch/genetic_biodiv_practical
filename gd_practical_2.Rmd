@@ -127,7 +127,13 @@ mammals$sc_gd <- scale(mammals$gene_diversity)
 mammals$sc_ar <- scale(mammals$allelic_richness)
 
 mammals$sc_hfi <- scale(mammals$hfi)
-mammals$sc_pop <- scale(log(mammals$popden))
+mammals$sc_pop <- scale(log(mammals$popden+1))
+
+birds$sc_gd <- scale(birds$gene_diversity)
+birds$sc_ar <- scale(birds$allelic_richness)
+
+birds$sc_hfi <- scale(birds$hfi)
+birds$sc_pop <- scale(log(birds$popden))
 ## Note: we do not need to scale the 'urban' variable: it is a binary factor
 
 # Run a model looking at the effect of the Human Footprint Index on gene diversity:

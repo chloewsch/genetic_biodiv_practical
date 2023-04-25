@@ -111,13 +111,13 @@ In this file, individuals are on one row, and the groups are sample locations.
  **Q1: how many individuals are there in this file?**
 ```{r}
 # Hint:
-# nrow(microsats)
+nrow(microsats)
 ```
 
 **Q2: how many loci are there in this file?**
 ```{r}
 # Hint:
-# ncol(microsats)
+ncol(microsats)
 ```
 
 Now we want R to read the file knowing that it's genetic data.
@@ -144,7 +144,7 @@ summary(snow)
 ```
 
 What's stored in a genind object?
-```{r, eval = FALSE}
+```{r, eval = T}
 attributes(snow)
 ```
 
