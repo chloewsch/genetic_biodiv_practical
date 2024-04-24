@@ -6,13 +6,13 @@
 #library(tidyr)
 #library(dplyr)
 
-library(sf)                # spatial data wrangling
-library(rnaturalearth)     # optional; for base map
-library(rnaturalearthdata) # optional; for base map
-library(ggplot2)           # optional for mapping
+library(sf)                 # spatial data wrangling
+#library(rnaturalearth)     # optional; for base map
+#library(rnaturalearthdata) # optional; for base map
+library(ggplot2)            # optional for mapping
 
-library(adegenet)          # compute diversity metrics for genetic data
-library(hierfstat)         # compute diversity metrics for genetic data
+library(adegenet)           # compute diversity metrics for genetic data
+library(hierfstat)          # compute diversity metrics for genetic data
 
 # Some extra custom functions:
 source('other_functions.R')
@@ -56,7 +56,8 @@ head(coords_spatial)
 ## Q: How did the coordinate data change? What does it look like now? -----
 
 # These data were sampled in Canada and the US. Let's get a map of these countries:
-ca_usa <- ne_countries(country = c('Canada', 'United States of America'), returnclass = 'sf')
+#ca_usa <- ne_countries(country = c('Canada', 'United States of America'), returnclass = 'sf')
+ca_usa <- readRDS('data/basemap.RDS')
 
 # Plot with ggplot:
 ggplot() + 
