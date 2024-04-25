@@ -85,6 +85,7 @@ ggplot(birds, aes(y = gene_diversity, x = hfi)) +
 # For this we will use hierarchical linear models (AKA linear mixed models)
 mammals$sc_gd <- scale(mammals$gene_diversity)
 mammals$sc_ar <- scale(mammals$allelic_richness)
+mammals$sc_fst <- scale(mammals$global_fst)
 
 mammals$sc_hfi <- scale(mammals$hfi)
 mammals$sc_pop <- scale(log(mammals$popden+1))
@@ -95,6 +96,9 @@ summary(gd_mod)
 
 ar_mod <- lmer(sc_ar ~ sc_hfi + (sc_hfi||species), data = mammals)
 summary(ar_mod)
+
+fst_mod <- lmer(sc_fst ~ sc_hfi + (sc_hfi||species), data = mammals)
+summary(fst_mod)
 
 # Check the model residuals:
 res <- residuals(gd_mod)
@@ -116,7 +120,7 @@ qqline(res)
 # 3. Plot results ------
 
 # Create a list of models
-model_list <- list(gd_mod, ar_mod)
+model_list <- list(gd_mod, ar_mod, fst_mod)
 
 # Make a plot for 1 predictor variable (here HFI):
 predictor_list <- as.list(rep('sc_hfi', length(model_list))) # list of predictors
