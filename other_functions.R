@@ -1,6 +1,6 @@
 library(sf)                # spatial data wrangling
-library(rnaturalearth)     # optional; for base map
-library(rnaturalearthdata) # optional; for base map
+#library(rnaturalearth)     # optional; for base map
+#library(rnaturalearthdata) # optional; for base map
 library(ggplot2)           # optional for mapping
 
 stat_mode <- function(x) {
